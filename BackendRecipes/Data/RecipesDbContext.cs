@@ -1,10 +1,20 @@
-﻿using System;
-namespace BackendRecipes.Data
+﻿using BackendRecipes.API.Data;
+using BackendRecipes.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace BackendRecipes.API.Data
 {
-    public class test
+    public class RecipesDbContext : DbContext
     {
-        public test()
+        public RecipesDbContext(DbContextOptions options) : base(options)
         {
+        }
+
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

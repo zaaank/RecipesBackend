@@ -1,11 +1,23 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using BackendRecipes.API.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
+var connectionString = builder.Configuration.GetConnectionString("RecipeDbConnectionString");
+builder.Services.AddDbContext<RecipesDbContext>(options =>
+{
+    options.UseMySql(connectionString, serverVersion);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 var app = builder.Build();
 
