@@ -9,7 +9,7 @@
       <File FileName="BackendRecipes/Program.cs" Line="37" Column="1" />
       <File FileName="BackendRecipes/WeatherForecast.cs" Line="1" Column="1" />
       <File FileName="BackendRecipes/appsettings.json" Line="3" Column="30" />
-      <File FileName="BackendRecipes/appsettings.Development.json" Line="1" Column="1" />
+      <File FileName="BackendRecipes/appsettings.Development.json" Line="10" Column="1" />
       <File FileName="BackendRecipes/Data/Entities/Recipe.cs" Line="16" Column="2" />
       <File FileName="BackendRecipes/Data/Configurations/RecipeConfiguration.cs" Line="1" Column="1" />
       <File FileName="BackendRecipes/Data/Entities/Ingredient.cs" Line="12" Column="1" />
@@ -27,9 +27,7 @@
                 <Node name="Entities" expanded="True" />
               </Node>
               <Node name="Properties" expanded="True" />
-              <Node name="appsettings.json" expanded="True">
-                <Node name="appsettings.Development.json" selected="True" />
-              </Node>
+              <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
         </State>
