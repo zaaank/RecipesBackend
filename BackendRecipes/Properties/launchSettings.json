@@ -12,6 +12,7 @@
     "BackendRecipes": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "applicationUrl": "http://localhost:16378",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
