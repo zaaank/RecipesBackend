@@ -33,10 +33,18 @@
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="Data\Dto\" />
+    <None Remove="Data\Dto\Recipe\" />
+    <None Remove="Data\Dto\Ingredient\" />
+    <None Remove="Configurations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Data\Configurations\" />
+    <Folder Include="Data\Dto\" />
+    <Folder Include="Data\Dto\Recipe\" />
+    <Folder Include="Data\Dto\Ingredient\" />
+    <Folder Include="Configurations\" />
   </ItemGroup>
 </Project>

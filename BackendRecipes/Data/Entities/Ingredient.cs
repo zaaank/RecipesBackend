@@ -7,8 +7,8 @@ namespace BackendRecipes.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string storeName { get; set; }
-        public string mark { get; set; }
+        public string StoreName { get; set; }
+        public string Mark { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
     }
