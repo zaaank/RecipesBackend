@@ -1,6 +1,6 @@
 ﻿using BackendRecipes.Data.Entities;
 
-namespace BackendRecipes.API.Data
+namespace BackendRecipes.Data.Entities
 {
 
     public class Recipe

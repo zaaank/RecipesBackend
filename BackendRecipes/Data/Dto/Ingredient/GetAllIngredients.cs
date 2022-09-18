@@ -1,16 +1,12 @@
 ﻿using System;
-using BackendRecipes.Data.Entities;
-
-namespace BackendRecipes.Data.Entities
+namespace BackendRecipes.Data.Dto.Ingredient
 {
-    public class Ingredient
+    public class GetAllIngredients
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string StoreName { get; set; }
         public string Mark { get; set; }
-
-        public ICollection<Recipe> Recipes { get; set; }
     }
 }
 

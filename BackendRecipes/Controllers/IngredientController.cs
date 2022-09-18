@@ -27,13 +27,16 @@ namespace BackendRecipes.Controllers
 
         // GET: api/Ingredient
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
+        public async Task<ActionResult<IEnumerable<GetAllIngredients>>> GetIngredients()
         {
           if (_context.Ingredients == null)
           {
               return NotFound();
           }
-            return await _context.Ingredients.ToListAsync();
+            var ingredients = await _context.Ingredients.ToListAsync();
+            var mappedIngredients = _mapper.Map<List<GetAllIngredients>>(ingredients);
+
+            return mappedIngredients;
         }
 
         // GET: api/Ingredient/5
