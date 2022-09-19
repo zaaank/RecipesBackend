@@ -95,18 +95,24 @@ namespace BackendRecipes.Controllers
                 return Problem("Entity set 'RecipesDbContext.Recipes'  is null.");
             }
             List<Ingredient> ingredient = new List<Ingredient>();
-            recipe.IngredientIds.ForEach(ingreditentId =>
-            {
-                ingredient.Add(_context.Ingredients.Find(ingreditentId));
-            });
+            
             var origRecipe = new Recipe
             {
                 Name = recipe.Name,
                 Directions = recipe.Directions,
-                Group = recipe.Group,
-                Ingredients = ingredient,
+                Group = recipe.Group
             };
             await _context.Recipes.AddAsync(origRecipe);
+
+            recipe.IngredientIds.ForEach(ingreditentId =>
+            {
+                var newConnection = new IngredientRecipe
+                {
+                    IngredientId = ingreditentId,
+                    RecipeId = origRecipe.Id
+                };
+                _context.IngredientRecipes.Add(newConnection);
+            });
 
 
 

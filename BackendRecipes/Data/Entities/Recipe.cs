@@ -11,6 +11,6 @@ namespace BackendRecipes.Data.Entities
         public string Directions { get; set; }
         public string Group { get; set; }
 
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<IngredientRecipe> Ingredients { get; set; }
     }
 }
