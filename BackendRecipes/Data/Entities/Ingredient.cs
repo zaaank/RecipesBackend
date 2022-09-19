@@ -10,7 +10,7 @@ namespace BackendRecipes.Data.Entities
         public string StoreName { get; set; }
         public string Mark { get; set; }
 
-        public ICollection<Recipe> Recipes { get; set; }
+        public ICollection<IngredientRecipe> Recipes { get; set; }
     }
 }
 
