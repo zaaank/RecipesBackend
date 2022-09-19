@@ -16,7 +16,7 @@ namespace BackendRecipes.API.Data
         {
 
             modelBuilder.Entity<IngredientRecipe>(Entity => {
-                Entity.HasKey(x => new { x.id });
+                Entity.HasKey(x => new { x.Id });
                 Entity.HasOne(x => x.Ingredient).WithMany(x => x.Recipes).HasForeignKey(x => x.IngredientId);
                 Entity.HasOne(x => x.Recipe).WithMany(x => x.Ingredients).HasForeignKey(x => x.RecipeId);
             });

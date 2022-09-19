@@ -3,7 +3,7 @@ namespace BackendRecipes.Data.Entities
 {
     public class IngredientRecipe
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int IngredientId { get; set; }
         public int RecipeId { get; set; }
 
