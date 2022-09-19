@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackendRecipes.API.Data;
+using BackendRecipes.Data.Dto.Recipe;
+using AutoMapper;
+using BackendRecipes.Data.Entities;
 
 namespace BackendRecipes.Controllers
 {
@@ -14,10 +17,12 @@ namespace BackendRecipes.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly RecipesDbContext _context;
+        private readonly IMapper _mapper;
 
-        public RecipeController(RecipesDbContext context)
+        public RecipeController(RecipesDbContext context, IMapper mapper)
         {
             _context = context;
+            this._mapper = mapper;
         }
 
         // GET: api/Recipe
@@ -83,16 +88,33 @@ namespace BackendRecipes.Controllers
         // POST: api/Recipe
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
+        public async Task<ActionResult<AddRecipe>> PostRecipe(AddRecipe recipe)
         {
-          if (_context.Recipes == null)
-          {
-              return Problem("Entity set 'RecipesDbContext.Recipes'  is null.");
-          }
-            _context.Recipes.Add(recipe);
+            if (_context.Recipes == null)
+            {
+                return Problem("Entity set 'RecipesDbContext.Recipes'  is null.");
+            }
+            List<Ingredient> ingredient = new List<Ingredient>();
+            recipe.IngredientIds.ForEach(ingreditentId =>
+            {
+                ingredient.Add(_context.Ingredients.Find(ingreditentId));
+            });
+            var origRecipe = new Recipe
+            {
+                Name = recipe.Name,
+                Directions = recipe.Directions,
+                Group = recipe.Group,
+                Ingredients = ingredient,
+            };
+            await _context.Recipes.AddAsync(origRecipe);
+
+
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRecipe", new { id = recipe.Id }, recipe);
+
+
+            return Ok();
         }
 
         // DELETE: api/Recipe/5

@@ -1,5 +1,4 @@
-﻿using BackendRecipes.API.Data;
-using BackendRecipes.Data.Entities;
+﻿using BackendRecipes.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendRecipes.API.Data
