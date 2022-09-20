@@ -98,10 +98,9 @@ namespace BackendRecipes.Controllers
               return Problem("Entity set 'RecipesDbContext.Ingredients'  is null.");
           }
             var newIngredient = _mapper.Map<Ingredient>(ingredient);
-             _context.Ingredients.Add(newIngredient);
+            await _context.Ingredients.AddAsync(newIngredient);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("Post Ingredient", new { id = newIngredient.Id }, ingredient);
+            return CreatedAtAction(nameof(PostIngredient), new { id = newIngredient.Id }, newIngredient);
         }
 
         // DELETE: api/Ingredient/5
