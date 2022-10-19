@@ -36,6 +36,37 @@ namespace BackendRecipes.Controllers
             return await _context.Recipes.ToListAsync();
         }
 
+        // GET: api/Recipe/Dinner
+        [HttpGet("{{group}}")]
+        public async Task<ActionResult<IEnumerable<GetRecipeByGroupDto>>> GetRecipes(string group)
+        {
+            if (_context.Recipes == null)
+            {
+                return NotFound();
+            }
+            List<GetRecipeByGroupDto> customer1 = await (from recipes in _context.Recipes
+                                                         join ingredientRecipes in _context.IngredientRecipes
+                                                        on recipes.Id equals ingredientRecipes.RecipeId
+                                                         where recipes.Group == @group
+                                                         group ingredientRecipes.IngredientId
+                                                         by
+                                                         new {
+                                                            recipes.Id,
+                                                            recipes.Name,
+                                                            recipes.Group, 
+                                                            recipes.Directions
+                                                        } into g
+                                                         select new GetRecipeByGroupDto
+                                                        {
+                                                          Id = g.Key.Id,
+                                                          Name = g.Key.Name,
+                                                          Group = g.Key.Group,
+                                                          Directions = g.Key.Directions,
+                                                          ingredientIds = g.ToList()
+                                                        }).ToListAsync();
+            return Ok(customer1);
+        }
+
         // GET: api/Recipe/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Recipe>> GetRecipe(int id)
@@ -96,30 +127,30 @@ namespace BackendRecipes.Controllers
             }
             List<Ingredient> ingredient = new List<Ingredient>();
 
-            var origRecipe = new Recipe
-            {
-                Name = recipe.Name,
-                Directions = recipe.Directions,
-                Group = recipe.Group
-            };
-            await _context.Recipes.AddAsync(origRecipe);
-
+            var newIngredient = _mapper.Map<Recipe>(recipe);
+            await _context.Recipes.AddAsync(newIngredient);
+            await _context.SaveChangesAsync();
             recipe.IngredientIds.ForEach(ingreditentId =>
             {
                 var newConnection = new IngredientRecipe
                 {
                     IngredientId = ingreditentId,
-                    RecipeId = origRecipe.Id
+                    RecipeId = newIngredient.Id
                 };
                 _context.IngredientRecipes.Add(newConnection);
             });
 
 
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
 
-            await _context.SaveChangesAsync();
-
-
-
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest("Something went wrong" + e.InnerException.Message);
+            }
             return Ok();
         }
 
