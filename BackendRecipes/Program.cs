@@ -6,11 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
 var connectionString = builder.Configuration.GetConnectionString("RecipeDbConnectionString");
 builder.Services.AddDbContext<RecipesDbContext>(options =>
 {
-    options.UseMySql(connectionString, serverVersion);
+    options.UseSqlServer(connectionString);
 });
 
 builder.Services.AddControllers();
