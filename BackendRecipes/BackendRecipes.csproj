@@ -37,12 +37,9 @@
     <None Remove="Configurations\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Data\Configurations\" />
-    <Folder Include="Data\Dto\" />
     <Folder Include="Data\Dto\Recipe\" />
-    <Folder Include="Data\Dto\Ingredient\" />
     <Folder Include="Configurations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using BackendRecipes.API.Data;
+using BackendRecipes.Data.Dto.Ingredient;
+using BackendRecipes.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BackendRecipes.API.Data;
-using BackendRecipes.Data.Entities;
-using BackendRecipes.Data.Dto.Ingredient;
-using AutoMapper;
 
 namespace BackendRecipes.Controllers
 {
@@ -29,10 +24,10 @@ namespace BackendRecipes.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetAllIngredients>>> GetIngredients()
         {
-          if (_context.Ingredients == null)
-          {
-              return NotFound();
-          }
+            if (_context.Ingredients == null)
+            {
+                return NotFound();
+            }
             var ingredients = await _context.Ingredients.ToListAsync();
             var mappedIngredients = _mapper.Map<List<GetAllIngredients>>(ingredients);
 
@@ -43,10 +38,10 @@ namespace BackendRecipes.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Ingredient>> GetIngredient(int id)
         {
-          if (_context.Ingredients == null)
-          {
-              return NotFound();
-          }
+            if (_context.Ingredients == null)
+            {
+                return NotFound();
+            }
             var ingredient = await _context.Ingredients.FindAsync(id);
 
             if (ingredient == null)
@@ -91,16 +86,18 @@ namespace BackendRecipes.Controllers
         // POST: api/Ingredient
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PostIngredient>> PostIngredient(PostIngredient ingredient)
+        public async Task<ActionResult<PostIngredientResponse>> PostIngredient(PostIngredient ingredient)
         {
-          if (_context.Ingredients == null)
-          {
-              return Problem("Entity set 'RecipesDbContext.Ingredients'  is null.");
-          }
+            if (_context.Ingredients == null)
+            {
+                return Problem("Entity set 'RecipesDbContext.Ingredients'  is null.");
+            }
             var newIngredient = _mapper.Map<Ingredient>(ingredient);
             await _context.Ingredients.AddAsync(newIngredient);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(PostIngredient), new { id = newIngredient.Id }, newIngredient);
+            return CreatedAtAction(nameof(PostIngredient), new { id = newIngredient.Id },
+                new PostIngredientResponse(newIngredient)
+            );
         }
 
         // DELETE: api/Ingredient/5
